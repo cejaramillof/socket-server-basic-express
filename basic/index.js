@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public'))
 // connection
 io.on('connection', (socket) => {
   // socket or client (is the user connected)
-  console.log('Un dispositivo se conectó! ClientId:', socket.id)
+  console.log('Client connected! ClientId:', socket.id)
 
   // emit event (event, payload to share with client)
   socket.emit('welcome-message', 'Welcome to da server');
@@ -27,8 +27,15 @@ io.on('connection', (socket) => {
     serverDate: Date.now()
   });
 
+  // listen default namespace '/'
   socket.on('mensaje-to-server', ({ msg, clientDate }) => {
     console.log('Message from client:', msg, clientDate)
+  });
+
+  socket.on('new-msg', ({ msg }) => {
+    console.log('New message:', msg)
+    // socket.emit('new-server-msg', { msg }) // only will notify current client (socket)
+    io.emit('new-server-msg', { msg }) // will notify all sockets (clients connecteds)
   });
 });
 

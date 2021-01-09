@@ -10,8 +10,27 @@
 </head>
 
 <body class="container">
-    <h1 class="mt-5">Acceso denegado</h1>
+    <h1 class="mt-5">MiniChat</h1>
     <hr>
+    <form id="myForm">
+        <div class="row">
+            <div class="col-8">
+                <input type="text" class="form-control" placeholder="Message" id="msgTxt" aria-label="message" />
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary">
+                    Send
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col">
+            <ul id="myMsg" class="mt-3">
+                <li>test</li>
+            </ul>
+        </div>
+    </div>
     <script src="http://localhost:8080/socket.io/socket.io.js"></script>
     <!--
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.5/socket.io.js"
@@ -34,6 +53,23 @@
         socket.on('welcome-object', ({ msg, serverDate }) => {
             // callback to execute
             console.log('server emit object:', msg, serverDate);
+        });
+
+        // DOM references
+        const form = document.querySelector('#myForm');
+        const msgList = document.querySelector('#myMsg');
+        const msg = document.querySelector('#msgTxt')
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newMsg = msg.value;
+            socket.emit('new-msg', { msg: newMsg });
+            msg.value = '';
+        })
+
+        socket.on('new-server-msg', ({ msg }) => {
+            msgList.innerHTML += `<li>${msg}</li>`
+            console.log('append:', msg);
         });
     </script>
 </body>
