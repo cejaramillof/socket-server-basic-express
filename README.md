@@ -1,6 +1,8 @@
 - `npm init -y`
-- `npm i express`
+- `npm i express socket.io`
+- `npm i -D nodemon`
 - `index.js`
+- `public/index.html`
 
 # Socket Server
 
