@@ -3,6 +3,7 @@
 - `npm i -D nodemon`
 - `index.js`
 - `public/index.html`
+- `npm i dotenv cors`
 
 # Socket Server
 

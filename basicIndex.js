@@ -13,7 +13,7 @@ const io = require('socket.io')(server);
 app.use(express.static(__dirname + '/public'))
 
 
-// connection
+// on connection
 io.on('connection', (socket) => {
   // socket or client (is the user connected)
   console.log('Client connected! ClientId:', socket.id)
