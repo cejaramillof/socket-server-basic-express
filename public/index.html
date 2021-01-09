@@ -41,6 +41,10 @@
         // Connection with socket server
         const socket = io('http://localhost:8080');
 
+        socket.on('connect', () => {
+            console.log('connected');
+        })
+
         // to emit
         socket.emit('mensaje-to-server', { msg: 'data from client', clientDate: Date.now() });
 
