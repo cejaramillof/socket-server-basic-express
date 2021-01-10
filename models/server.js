@@ -7,7 +7,8 @@ const path = require('path');
 const cors = require('cors');
 
 // const Sockets = require('./sockets');
-const Sockets = require('./band/sockets');
+// const Sockets = require('./band/sockets');
+const Sockets = require('./ticket/sockets');
 
 class Server {
   constructor() {
@@ -17,6 +18,8 @@ class Server {
     this.server = http.createServer(this.app);
     // Sockets config
     this.io = socketio(this.server, { /* config */ });
+
+    // this.sockets = new Sockets(this.io);
   }
 
   middlewares() {
@@ -24,6 +27,14 @@ class Server {
     this.app.use(express.static(path.resolve(__dirname, '../public')));
     // CORS
     this.app.use(cors());
+
+    // Get last tickets
+    this.app.get('/ultimos', (req, res) => {
+      res.json({
+        ok: true,
+        ultimos: this.sockets.ticketList.ultimos13
+      });
+    });
   }
 
   // this config can stay here or in a prop class
