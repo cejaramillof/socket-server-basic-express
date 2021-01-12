@@ -1,3 +1,4 @@
+const Escritorios = require('./escritorios');
 const TicketList = require('./ticket-list');
 
 class Sockets {
@@ -5,6 +6,7 @@ class Sockets {
     this.io = io;
     // Instance of ticket list
     this.ticketList = new TicketList();
+    this.escritorios = new Escritorios();
     this.socketEvents();
   }
 
@@ -21,6 +23,15 @@ class Sockets {
         callback(suTicket);
         this.io.emit('ticket-asignado', this.ticketList.ultimos13);
       })
+      socket.on('crear-escritorio', ({ escritorio }) => {
+        this.escritorios.addEscritorio(escritorio);
+        this.io.emit('cantidad-escritorios', this.escritorios.cantidadEscritorios);
+      });
+      socket.on('remover-escritorio', ({ escritorio },) => {
+        this.escritorios.removeEscritorio(escritorio);
+        this.io.emit('cantidad-escritorios', this.escritorios.cantidadEscritorios);
+      });
+
     });
   }
 }
