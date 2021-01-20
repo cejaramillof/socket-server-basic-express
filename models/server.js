@@ -19,7 +19,7 @@ class Server {
     // Sockets config
     this.io = socketio(this.server, { /* config */ });
 
-    // this.sockets = new Sockets(this.io);
+    this.sockets = new Sockets(this.io);
   }
 
   middlewares() {
@@ -32,7 +32,7 @@ class Server {
     this.app.get('/ultimos', (req, res) => {
       res.json({
         ok: true,
-        ultimos: this.sockets.ticketList.ultimos13
+        ultimos: this.sockets.ticketList.ultimos
       });
     });
   }
@@ -45,8 +45,10 @@ class Server {
   execute() {
     // init Middlewares
     this.middlewares();
+
     // init sockets
-    this.configurarSockets();
+    // this.configurarSockets();
+
     // init Server
     this.server.listen(this.port, () => {
       console.log('Server corriendo en puerto:', this.port);

@@ -17,6 +17,26 @@ class TicketList {
     return this.asignados.slice(0, 13);
   }
 
+  get ultimos() {
+    let enEscritorio = [];
+    let historico = [];
+    const escritorios = new Map();
+
+    this.asignados.map((ticket) => {
+      if (!escritorios[ticket.escritorio]) {
+        escritorios[ticket.escritorio] = 1;
+        enEscritorio.push(ticket);
+        return;
+      }
+      historico.push(ticket)
+    })
+
+    return {
+      enEscritorio,
+      historico: historico.slice(0, 6),
+    }
+  }
+
   crearTicket() {
     const nuevoTicket = new Ticket(this.siguienteNumero);
     this.pendientes.push(nuevoTicket);
