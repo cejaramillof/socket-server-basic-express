@@ -8,7 +8,8 @@ const cors = require('cors');
 
 // const Sockets = require('./sockets');
 // const Sockets = require('./band/sockets');
-const Sockets = require('./ticket/sockets');
+// const Sockets = require('./ticket/sockets');
+const Sockets = require('./map/sockets');
 
 class Server {
   constructor() {
