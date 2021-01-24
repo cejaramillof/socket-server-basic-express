@@ -8,7 +8,6 @@ class Sockets {
   }
 
   socketEvents() {
-    // On connection
     this.io.on('connection', (socket) => {
       socket.emit('marcadores-activos', this.marcadores.activos);
       socket.on('marcador-nuevo', (marcador) => {  // { id, lng, lat }
