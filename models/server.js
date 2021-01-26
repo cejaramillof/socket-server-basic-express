@@ -9,16 +9,17 @@ const cors = require('cors');
 // const Sockets = require('./sockets');
 // const Sockets = require('./band/sockets');
 // const Sockets = require('./ticket/sockets');
-const Sockets = require('./map/sockets');
+// const Sockets = require('./map/sockets');
+const Sockets = require('../chat/models/sockets');
+const { dbConnection } = require('../chat/database/config');
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
-    // Http server
-    this.server = http.createServer(this.app);
-    // Sockets config
-    this.io = socketio(this.server, { /* config */ });
+    dbConnection(); // db Conection
+    this.server = http.createServer(this.app); // Http server
+    this.io = socketio(this.server, { /* config */ }); // Sockets config
 
     this.sockets = new Sockets(this.io);
   }
@@ -36,6 +37,11 @@ class Server {
         ultimos: this.sockets.ticketList.ultimos
       });
     });
+
+    // ChatServer Endpoints
+    this.app.use(express.json());
+    this.app.use('/api/login', require('../chat/router/auth'));
+    this.app.use('/api/mensajes', require('../chat/router/mensajes'));
   }
 
   // this config can stay here or in a prop class

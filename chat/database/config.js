@@ -14,6 +14,7 @@ const dbConnection = async () => {
   }
 }
 
+// module.exports= dbConnection; // default export
 module.exports = {
   dbConnection
 }

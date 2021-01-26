@@ -1,6 +1,5 @@
 // Server Model: express server + socket.io config
-// const Server = require('./models/server');
-const Server = require('./chat/models/server');
+const Server = require('./models/server');
 
 // load env vars
 require('dotenv').config();

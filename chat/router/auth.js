@@ -11,7 +11,15 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
-// Crear nuevos usuarios
+/*
+router.post('/new', (req, res) => {
+  res.json({
+    ok: true,
+    usuario: 'ABC',
+  });
+});
+*/
+
 router.post('/new', [
   check('nombre', 'El nombre es obligatorio').not().isEmpty(),
   check('password', 'El password es obligatorio').not().isEmpty(),
@@ -19,14 +27,12 @@ router.post('/new', [
   validarCampos
 ], crearUsuario);
 
-// Login
 router.post('/', [
   check('email', 'El email es obligatorio').isEmail(),
   check('password', 'El password es obligatorio').not().isEmpty(),
   validarCampos
 ], login);
 
-// Revalidar Token
 router.get('/renew', validarJWT, renewToken);
 
 module.exports = router;
