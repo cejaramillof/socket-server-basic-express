@@ -39,7 +39,7 @@ class Server {
     });
 
     // ChatServer Endpoints
-    this.app.use(express.json());
+    this.app.use(express.json()); // parse body to json
     this.app.use('/api/login', require('../chat/router/auth'));
     this.app.use('/api/mensajes', require('../chat/router/mensajes'));
   }
